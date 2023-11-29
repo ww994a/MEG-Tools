@@ -68,7 +68,10 @@ class MEG:
 
         for chan in self.channels:
             ch_names.append(chan['ch_name'])
-            ch_types.append('mag')
+            if (chan['kind']) == 1:
+                ch_types.append('mag')
+            else :
+                ch_types.append('eeg')
         # Mne Object
         info = mne.create_info(ch_names, ch_types=ch_types, sfreq=self.sampling_freq) 
         MEG_raw = mne.io.RawArray(self.data_raw, info)
