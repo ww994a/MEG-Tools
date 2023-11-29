@@ -50,7 +50,10 @@ class MEG:
             
         for channel in self.channels:
             channel['coord_frame'] = channel['coord_frame'][0][0]
-
+            new_loc_array = []
+            for item in channel['loc']:
+                new_loc_array.append(item[0])
+            channel['loc'] = np.array(new_loc_array)
             if type(channel['ch_name']) != np.str_:
                 channel['ch_name'] = channel['ch_name'][0]
             if type(channel['range']) != np.float64:
@@ -99,6 +102,14 @@ class MEG:
         self._fif_file = self.filename+'.tmp.raw.fif'
         MEG_raw.save(self._fif_file, overwrite=True)
         raw = mne.io.read_raw(self._fif_file)
+        #format and set info
+        for n in range(len(self.channels)):
+            raw.info['chs'][n]['logno'] = self.channels[n]['logno']
+            raw.info['chs'][n]['range'] = self.channels[n]['range']
+            raw.info['chs'][n]['cal'] = self.channels[n]['cal']
+            raw.info['chs'][n]['coil_type'] = self.channels[n]['coil_type']
+            raw.info['chs'][n]['loc'] = self.channels[n]['loc']
+            raw.info['chs'][n]['unit'] = self.channels[n]['unit']
         return raw
         
     def __del__(self):
