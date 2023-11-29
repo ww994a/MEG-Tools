@@ -18,6 +18,8 @@ Currently the tools support MEG data exported as .mat data from MatLab. If your 
 ## Further Examples
 The notebook 'MEG-Examples' contains further examples such as:
 
+<img src="images/MEG-Scan-Visualization.png" width="350">
+<img src="images/MEG-Sensor-Position.png" width="350">
 
 ## Properties of MEG Object
 Other than plotting, the MEG object makes the following properties available:
