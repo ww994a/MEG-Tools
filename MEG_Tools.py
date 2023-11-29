@@ -1,7 +1,7 @@
 from scipy import io
 import os
 import mne
-import random
+import numpy as np
 
 class MEG:
     def __init__(self, filename):
@@ -45,10 +45,30 @@ class MEG:
             data_dict = dict(zip(keys, values))
             self.channels.append(data_dict)
             
-        #Unnest name
-        for channel in self.channels:
-            channel['ch_name'] = channel['ch_name'][0]
+        #Unnest variables - 
 
+            
+        for channel in self.channels:
+            channel['coord_frame'] = channel['coord_frame'][0][0]
+
+            if type(channel['ch_name']) != np.str_:
+                channel['ch_name'] = channel['ch_name'][0]
+            if type(channel['range']) != np.float64:
+                channel['range'] = channel['range'][0][0]
+            if type(channel['scanno']) != np.int32:
+                channel['scanno'] = channel['scanno'][0][0] 
+            if type(channel['logno']) != np.int32:
+                channel['logno'] = channel['logno'][0][0] 
+            if type(channel['coil_type']) != np.int32:
+                channel['coil_type'] = channel['coil_type'][0][0] 
+            if type(channel['cal']) != np.float64:
+                channel['cal'] = channel['cal'][0][0]
+            if type(channel['kind']) != np.int32:
+                channel['kind'] = channel['kind'][0][0]
+            if type(channel['unit']) != np.int32:
+                channel['unit'] = channel['unit'][0][0]
+            if type(channel['unit_mul']) != np.int32:
+                channel['unit_mul'] = channel['unit_mul'][0][0]
         #Other data?
         #dipole_sleep_2
         self.info = {}
