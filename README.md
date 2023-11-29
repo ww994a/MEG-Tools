@@ -2,7 +2,7 @@
 Tools for accessing, visualizing, and analyzing MEG in python.
 
 ## Requirements
-MEG-Tools requires the installation of the MNE library. Visit [mne.tools](https://mne.tools) to download and install.
+MEG-Tools requires the installation of the MNE library. Visit [mne.tools](https://mne.tools) to download and install. For a great introduction on MNE see [Pybrain: M/EEG analysis with MNE Python](https://www.youtube.com/watch?v=t-twhNqgfSY)
 
 ### File Type
 Currently the tools support MEG data exported as .mat data from MatLab. If your data is in another format, you mostly likely can load it directly into MNE.
