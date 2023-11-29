@@ -1,5 +1,5 @@
 # MEG-Tools
-Tools for accessing, visualizing, and analyzing MEG 
+Tools for accessing, visualizing, and analyzing MEG in python.
 
 ## Requirements
 MEG-Tools requires the installation of the MNE library. Visit [mne.tools](https://mne.tools) to download and install.
