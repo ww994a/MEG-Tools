@@ -1,6 +1,6 @@
 # MEG-Tools
 Tools for accessing, visualizing, and analyzing MEG in python.
-
+[![Start-up Vido](images/Video-Start.png)](https://www.youtube.com/watch?v=vfZQJUltfMA)
 ## Requirements
 MEG-Tools requires the installation of the MNE library. Visit [mne.tools](https://mne.tools) to download and install. For a great introduction on MNE see [Pybrain: M/EEG analysis with MNE Python](https://www.youtube.com/watch?v=t-twhNqgfSY)
 
