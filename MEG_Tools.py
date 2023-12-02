@@ -117,26 +117,32 @@ class MEG:
         return raw
     
     def get_spikes(self):
-        if 'Dipole_sleep_2' in self.info:
+        spike_location = ''
+        for key in self.info.keys():
+            if key.startswith("Dipole") or key.startswith("dipole"):
+                spike_location = key
+                break 
+            
+        if spike_location in self.info:
             self.spikes = []
             
-            for n in range(len(self.info['Dipole_sleep_2'][0])):
+            for n in range(len(self.info[spike_location][0])):
                 spike = {}
-                spike['dipole'] = self.info['Dipole_sleep_2'][0][n][0][0][0]
-                spike['begin'] = self.info['Dipole_sleep_2'][0][n][1][0][0]
-                spike['end'] = self.info['Dipole_sleep_2'][0][n][2][0][0]
-                spike['r0'] = self.info['Dipole_sleep_2'][0][n][3]
-                spike['rd'] = self.info['Dipole_sleep_2'][0][n][4]
-                spike['Q'] = self.info['Dipole_sleep_2'][0][n][5]
-                spike['goodness'] = self.info['Dipole_sleep_2'][0][n][6][0][0]
-                spike['errors_computed'] = self.info['Dipole_sleep_2'][0][n][7][0][0]
-                spike['noise_level'] = self.info['Dipole_sleep_2'][0][n][8][0][0]
-                spike['single_errors'] = self.info['Dipole_sleep_2'][0][n][9]
-                spike['error_matrix'] = self.info['Dipole_sleep_2'][0][n][10]
-                spike['conf_volume'] = self.info['Dipole_sleep_2'][0][n][11][0][0]
-                spike['khi2'] = self.info['Dipole_sleep_2'][0][n][12][0][0]
-                spike['prob'] = self.info['Dipole_sleep_2'][0][n][13][0][0]
-                spike['noise_est'] = self.info['Dipole_sleep_2'][0][n][14][0][0]
+                spike['dipole'] = self.info[spike_location][0][n][0][0][0]
+                spike['begin'] = self.info[spike_location][0][n][1][0][0]
+                spike['end'] = self.info[spike_location][0][n][2][0][0]
+                spike['r0'] = self.info[spike_location][0][n][3]
+                spike['rd'] = self.info[spike_location][0][n][4]
+                spike['Q'] = self.info[spike_location][0][n][5]
+                spike['goodness'] = self.info[spike_location][0][n][6][0][0]
+                spike['errors_computed'] = self.info[spike_location][0][n][7][0][0]
+                spike['noise_level'] = self.info[spike_location][0][n][8][0][0]
+                spike['single_errors'] = self.info[spike_location][0][n][9]
+                spike['error_matrix'] = self.info[spike_location][0][n][10]
+                spike['conf_volume'] = self.info[spike_location][0][n][11][0][0]
+                spike['khi2'] = self.info[spike_location][0][n][12][0][0]
+                spike['prob'] = self.info[spike_location][0][n][13][0][0]
+                spike['noise_est'] = self.info[spike_location][0][n][14][0][0]
                 self.spikes.append(spike)
         
         
