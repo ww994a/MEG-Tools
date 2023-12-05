@@ -85,7 +85,9 @@ class MEG:
                 
         
                 
-    def get_mne(self):
+    def get_mne(self, preload=True):
+        if preload == False:
+            print('Events will not be loaded when preload=False')
         #delete old temporary file
         if self._fif_file != None:
             os.remove(self._fif_file)
@@ -105,7 +107,7 @@ class MEG:
         #save fif file
         self._fif_file = self.filename+'.tmp.raw.fif'
         MEG_raw.save(self._fif_file, overwrite=True)
-        raw = mne.io.read_raw(self._fif_file)
+        raw = mne.io.read_raw(self._fif_file, preload=preload)
         #format and set info
         for n in range(len(self.channels)):
             raw.info['chs'][n]['logno'] = self.channels[n]['logno']
@@ -114,6 +116,29 @@ class MEG:
             raw.info['chs'][n]['coil_type'] = self.channels[n]['coil_type']
             raw.info['chs'][n]['loc'] = self.channels[n]['loc']
             raw.info['chs'][n]['unit'] = self.channels[n]['unit']
+
+        #add spikes as events if they exist
+        if len(self.spikes) > 0 and preload == True:
+            #get spike times
+            spike_times = []
+            spike_duration = []
+            for spike in self.spikes:
+                spike_times.append(spike['begin'])
+                spike_duration.append(spike['end']-spike['begin'])
+
+            spike_list = ['Spike' for _ in spike_times]
+            spike_ch = [[] for _ in spike_times]
+            
+            #create annotations
+            annotations = mne.Annotations(onset=spike_times, duration=spike_duration,
+            description=spike_list,
+            ch_names=spike_ch)
+
+            raw.set_annotations(annotations)
+
+            events_from_annot, event_dict = mne.events_from_annotations(raw, event_id={'Spike':1}, use_rounding=True, chunk_duration=None, verbose=None)
+
+            raw.add_events(events_from_annot) #, stim_channel
         return raw
     
     def get_spikes(self):
